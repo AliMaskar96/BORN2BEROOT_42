@@ -1,0 +1,24 @@
+#!/bin/bash
+lb=$(who -b | awk '{print $3 " " $4}')
+IP=$(hostname -I)
+MAC=$(ip a | grep ether | awk '{print $2}')
+LVM=$(lsblk | grep lvm | wc -l)
+MEM_USED=$(free -m | grep Mem | awk '{print $3}')
+MEM_TOTAL=$(free -m | grep Mem | awk '{print $2}')
+MEM_PRE=$(free | grep Mem | awk '{printf("%.2f"), $3/$2*100}')
+DISK_USED=$(df --total -m | grep total | awk '{print $3}')
+DISK_TOTAL=$(df --total -h | grep total | awk '{print $2}')
+DISK_PRE=$(df --total | grep total | awk '{print $5}')
+wall    "#Architecture: $(uname -a)
+ #CPU physical : $(cat /proc/cpuinfo | grep 'physical id' | wc -l)
+ #vCPU : $(cat /proc/cpuinfo | grep processor | wc -l)
+ #Memory Usage: $MEM_USED/$(printf $MEM_TOTAL)MB ($MEM_PRE%)
+ #Disk Usage: $DISK_USED/$DISK_TOTAL"b" ($DISK_PRE)
+ #CPU load: $(mpstat | grep all | awk '{print 100 - $13 }')%
+ #Last boot: $lb
+ #LVM use: $(if [ $LVM -eq 0 ]; then printf 'no'; else printf 'yes'; fi)
+ #Connexions TCP : $(ss | grep tcp | grep ESTAB | wc -l) ESTABLISHED
+ #User log: $(w -h | awk '{print $1}' | sort | uniq | wc -l)
+ #Network: IP $IP ($MAC)
+ #Sudo : $(journalctl _COMM=sudo | grep COMMAND | wc -l) cmd
+"
