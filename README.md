@@ -1,6 +1,5 @@
 # BORN2BEROOT
 
-
 Ce projet a pour but de vous faire découvrir le merveilleux monde de la virtualisation.
 Vous allez créer votre première machine en respectant des consignes précises et en
 utilisant VirtualBox (ou UTM si VirtualBox ne fonctionne pas sur votre machine). Ainsi,
